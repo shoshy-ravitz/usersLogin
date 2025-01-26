@@ -60,11 +60,9 @@ const Login = () => {
         catch (e: any) {
             if (e.status == 401) {
                 alert("Invalid credentials")
-                //setIsLogin(false)
             }
             if (e.status == 422) {
                 alert("User already exists")
-                // setIsRegister(false)
             }
         }
     }

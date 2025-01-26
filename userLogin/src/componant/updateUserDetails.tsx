@@ -3,7 +3,6 @@ import { FormEvent, useContext, useState } from "react"
 import { UserContext } from "./userContext"
 import axios from "axios"
 import { pink } from '@mui/material/colors';
-import { data } from "react-router";
 
 const UpdateUserDetails = () => {
     const userDetail = useContext(UserContext)//using in useReducer value (all the data and function data)

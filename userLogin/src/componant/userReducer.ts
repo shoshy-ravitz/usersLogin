@@ -1,5 +1,3 @@
-import { Dispatch, createContext } from "react";
-
 export type userType = {
     name: string,
     lastName: string,
