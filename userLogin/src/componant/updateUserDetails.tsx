@@ -2,6 +2,8 @@ import { Box, Button, Modal, TextField, Typography } from "@mui/material"
 import { FormEvent, useContext, useState } from "react"
 import { UserContext } from "./userContext"
 import axios from "axios"
+import { pink } from '@mui/material/colors';
+import { data } from "react-router";
 
 const UpdateUserDetails = () => {
     const userDetail = useContext(UserContext)//using in useReducer value (all the data and function data)
@@ -33,16 +35,18 @@ const UpdateUserDetails = () => {
             })
             //for saving the detail in user , using by Dispatch function and send type of action (update,delte ...) and input value
             userDetail.Dispatch({
-                type: 'UPDATE', data:userDetail.user 
-                    // name: firstName,
-                    // lastName: lastName,
-                    // email: email,
-                    // addres: address,
-                    // phone: phone,
-                    // password: password,
-                    // id: userDetail.user.id
-                
+                type: 'UPDATE', data:{
+                    name: firstName,
+                    lastName: lastName,
+                    email: email,
+                    addres: address,
+                    phone: phone,
+                    password: password,
+                    id: userDetail.user.id
+                }              
             })
+            console.log(userDetail.user);
+            
             setIsUpdate(false)
         }
         catch (e: any) {
@@ -55,7 +59,7 @@ const UpdateUserDetails = () => {
     }
     return (
         <>
-            <Button onClick={handleUpdate} color="primary" >update</Button>
+            <Button onClick={handleUpdate}  style={{ backgroundColor: pink[400], color: "white" }} >update</Button>
             <Modal open={isUpdate} onClose={handleUpdate}>
                 <Box
                     sx={{

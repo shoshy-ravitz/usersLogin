@@ -1,17 +1,14 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { RouterProvider } from 'react-router'
 import './App.css'
-import Login from './componant/login'
-import ShowDetailsUser from './componant/showDetailsUser'
+import { router } from './Router'
+import { Outlet } from 'react-router'
+
 
 function App() {
-
-
   return (
     <>
-      <Login />
-      {/* <ShowDetailsUser/> */}
+      <RouterProvider router={router} />
+      <Outlet/>
     </>
   )
 }

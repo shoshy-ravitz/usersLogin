@@ -5,6 +5,8 @@ import UpdateUserDetails from "./updateUserDetails";
 import userReducer, { userType } from "./userReducer";
 import { UserContext } from "./userContext";
 import axios from "axios";
+import { pink } from '@mui/material/colors';
+
 
 const Login = () => {
 
@@ -13,6 +15,8 @@ const Login = () => {
     const [isLogin, setIsLogin] = useState(false);
     const [isRegister, setIsRegister] = useState(false);
     const [isShow, setIsShow] = useState(false);
+    const [showRegisterButton,setShowRegisterButton]=useState(false)
+    const [color,setColor]=useState<string>(pink[500])
 
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
@@ -29,23 +33,28 @@ const Login = () => {
         try {
             console.log(`http://localhost:3000/api/user/${isLogin ? 'login' : isRegister ? 'register' : ''}`);
 
-           const path= await axios.post(`http://localhost:3000/api/user/${isLogin ? 'login' : isRegister ? 'register' : ''}`, {
+            const path = await axios.post(`http://localhost:3000/api/user/${isLogin ? 'login' : isRegister ? 'register' : ''}`, {
                 email: emailRef.current?.value,
                 password: passwordRef.current?.value
             })
-            if(isLogin){
-                const userData=path.data.user
-                Dispatch({ type: 'UPDATE',data:userData})
+            if (isLogin) {
+                const userData = path.data.user
+                Dispatch({ type: 'UPDATE', data: userData })
+                
             }
-            else{//register
-                Dispatch({ type: 'ADD',
-                data:{
-                    email: emailRef.current?.value || '',
-                    password: passwordRef.current?.value || '',
-                    id:path.data.id //for create user(save it in users) - only name,the rest input will be empty
-                }})
+            else {//register
+                Dispatch({
+                    type: 'ADD',
+                    data: {
+                        email: emailRef.current?.value || '',
+                        password: passwordRef.current?.value || '',
+                        id: path.data.id //for create user(save it in users) - only name,the rest input will be empty
+                    }
+                })
+                setShowRegisterButton(true)
+                setColor(pink[300])
             }
-            setIsShow(true)
+           
             setOpen(false)
         }
         catch (e: any) {
@@ -62,10 +71,10 @@ const Login = () => {
     return (<>
         {!isShow && (
             <>
-                <Button onClick={handleLogin} variant="contained" color="primary">
+                <Button onClick={handleLogin}   variant="contained" style={{ backgroundColor: pink[500], color: "white" }}>
                     Login
                 </Button>
-                <Button onClick={handleRegister} variant="contained" color="primary">
+                <Button onClick={handleRegister} disabled={showRegisterButton} variant="contained"  style={{ backgroundColor: color, color: "white" }}>
                     Register
                 </Button>
             </>
@@ -78,7 +87,7 @@ const Login = () => {
                 boxShadow: 24,
                 borderRadius: 2,
                 margin: 'auto',
-                marginTop:'200px'
+                marginTop: '200px'
             }}>                    <Typography variant="h6" component="h2" gutterBottom>
                     Update Information
                 </Typography>
