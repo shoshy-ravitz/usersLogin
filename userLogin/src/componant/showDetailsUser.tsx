@@ -1,6 +1,6 @@
 import { Avatar } from "@mui/material";
 import { useContext } from "react";
-import { UserContext } from "./userContext";
+import { UserContext } from "../reducer/userContext";
 
 
 const ShowDetailsUser = () => {

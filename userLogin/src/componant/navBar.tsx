@@ -4,8 +4,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router';
 import Login from './login';
+import { Link } from 'react-router';
 
 const NavBar = () => {
     return (
@@ -26,6 +26,9 @@ const NavBar = () => {
                         </Button>
                         <Button color="inherit">
                             <Link to="/about" >about</Link>
+                        </Button>
+                        <Button color="inherit">
+                            <Link to="/recipe" >recipes</Link>
                         </Button>
                     </Box>
                 </Toolbar>

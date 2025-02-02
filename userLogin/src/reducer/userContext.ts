@@ -3,7 +3,7 @@ import { Actoin, userType } from "./userReducer";
 
 
 const user: userType = {
-    name: '', email: '', lastName: '', phone: '', password: '', addres: '',
+    firstName: '', email: '', lastName: '', phone: '', password: '', address: '',
     id: 0
 }
 

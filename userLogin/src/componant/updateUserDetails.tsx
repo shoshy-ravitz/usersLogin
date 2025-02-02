@@ -1,8 +1,9 @@
 import { Box, Button, Modal, TextField, Typography } from "@mui/material"
 import { FormEvent, useContext, useState } from "react"
-import { UserContext } from "./userContext"
 import axios from "axios"
-import { pink } from '@mui/material/colors';
+import { UserContext } from "../reducer/userContext";
+import { styleForm, styleIconClose } from "../style/style";
+import CloseIcon from '@mui/icons-material/Close';
 
 const UpdateUserDetails = () => {
     const userDetail = useContext(UserContext)//using in useReducer value (all the data and function data)
@@ -10,42 +11,32 @@ const UpdateUserDetails = () => {
     const [isUpdate, setIsUpdate] = useState(false)
 
     const [email, setEmail] = useState(userDetail.user.email || '')
-    const [firstName, setName] = useState(userDetail.user.name || '')
+    const [firstName, setName] = useState(userDetail.user.firstName || '')
     const [lastName, setLastName] = useState(userDetail.user.lastName || '')
-    const [address, setAddress] = useState(userDetail.user.addres || '')
+    const [address, setAddress] = useState(userDetail.user.address || '')
     const [phone, setPhone] = useState(userDetail.user.phone || '')
     const [password, setPassword] = useState(userDetail.user.password || '')
-
-
 
     const handleUpdate = () => { setIsUpdate(true) }
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
-        console.log(userDetail.user.id);
-        
         try {
             await axios.put("http://localhost:3000/api/user", {
                 firstName: firstName, lastName: lastName, email: email, address: address, phone: phone
-            }, {
-                headers: {
-                    'user-id': userDetail.user.id // Replace userId with the actual user ID you want to update
-                }
-            })
+            }, { headers: { 'user-id': userDetail.user.id } })
             //for saving the detail in user , using by Dispatch function and send type of action (update,delte ...) and input value
             userDetail.Dispatch({
-                type: 'UPDATE', data:{
-                    name: firstName,
+                type: 'UPDATE_USER', data: {
+                    firstName: firstName,
                     lastName: lastName,
                     email: email,
-                    addres: address,
+                    address: address,
                     phone: phone,
                     password: password,
                     id: userDetail.user.id
-                }              
+                }
             })
-            console.log(userDetail.user);
-            
             setIsUpdate(false)
         }
         catch (e: any) {
@@ -54,22 +45,15 @@ const UpdateUserDetails = () => {
             if (e.status == 403)
                 console.log(e);
         }
-
     }
     return (
         <>
-            <Button onClick={handleUpdate}  style={{ backgroundColor: pink[400], color: "white" }} >update</Button>
+            <Button onClick={handleUpdate} style={{ backgroundColor:"secondary", color: "white" }} >update</Button>
             <Modal open={isUpdate} onClose={handleUpdate}>
-                <Box
-                    sx={{
-                        bgcolor: 'background.paper',
-                        borderRadius: 2,
-                        boxShadow: 24,
-                        p: 4,
-                        width: 400,
-                        margin: 'auto',
-                    }}
-                >
+                <Box sx={styleForm}>
+                    <Box sx={styleIconClose} onClick={() => setIsUpdate(false)}>
+                        <CloseIcon sx={{ color: 'white' }} />
+                    </Box>
                     <Typography variant="h6" component="h2" gutterBottom>
                         Update Information
                     </Typography>
@@ -143,5 +127,4 @@ const UpdateUserDetails = () => {
             </Modal>
         </>)
 }
-
 export default UpdateUserDetails
